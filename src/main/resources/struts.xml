@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!-- 开发模式下使用，打印更详细的错误信息。 -->
+    <constant name="struts.devMode" value="false"/>
+    <!-- 当struts2的配置文件修改后，系统是否自动重新加载该文件，默认值为false（生产环境下使用），开发阶段最好打开。 -->
+    <constant name="struts.configuration.xml.reload" value="false"/>
+    <!-- 该属性设置是否每次HTTP请求到达时，系统都重新加载资源文件。该属性默认值是false。在开发阶段将该属性设置为true会更有利于开发， 但在产品发布阶段应将该属性设置为false。
+-->
+    <constant name="struts.i18n.reload" value="false"/>
+    <!--  设置是否对freemarker的模板设置缓存,效果相当于把template拷贝到 WEB_APP/templates. -->
+    <constant name="struts.freemarker.templatesCache" value="true"/>
+    <!--  指定Web应用的默认编码集 -->
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
+    <constant name="struts.multipart.maxSize" value="52428800"/>
+    <!--50M = 52428800-->
+    <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+    <constant name="struts.locale" value="zh-cn"/>
+    <constant name="struts.action.extension" value="jhtml"/>
+    <constant name="struts.objectFactory" value="com.framework.struts.CustomSpringObjectFactory"/>
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+    <constant name="struts.ui.theme" value="simple"/>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    <constant name="struts.multipart.saveDir" value="fileTemp"/>
+    <!--<constant name="struts.convention.action.name.lowercase" value="true"></constant>-->
+
+    <package name="defaultPackage" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="LoginInterceptor" class="com.data.data.hmly.interceptor.LoginInterceptor"/>
+            <interceptor-stack name="default">
+                <interceptor-ref name="LoginInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="default"/>
+        <global-results>
+            <result name="nologin">/sys/login/login.jhtml</result>
+            <result name="errorjson">/sys/login/errorjson.jhtml</result>
+            <result name="error">/sys/login/error.jhtml</result>
+            <result name="input">/error.jsp</result>
+        </global-results>
+        <action name="*/*/**" class="com.data.data.analysis.action.{1}.{2}Action" method="{3}"/>
+    </package>
+
+</struts>
