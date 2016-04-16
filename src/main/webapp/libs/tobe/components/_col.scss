@@ -3,40 +3,41 @@
 // alert scss
 //-----------------------------------------------------
 
+
 // 变量
 //---------------------------------
-$colThreeSwitch: true !default; //是否开启三列等分样式
-$colFourSwitch: true !default; //是否开启四列等分样式
+$colThreeSwitch:         true !default;//是否开启三列等分样式
+$colFourSwitch:          true !default;//是否开启四列等分样式
 
 // placeholder
 //---------------------------------
-%col-span {
-  @extend %clearfix;
-  margin-right: -$gridMarginValue;
-  margin-bottom: $baseGap;
+%col-span{
+	@extend %clearfix;
+	margin-right: -$gridMarginValue;
+	margin-bottom: $baseGap;
 
-  .col {
-    @include float;
-    margin-right: $gridMarginValue;
-  }
+	.col{
+		@include float;
+		margin-right: $gridMarginValue;
+	}	
 }
+
 
 // 样式
 //---------------------------------
 @if $colThreeSwitch {
-  .col-three {
-    @extend %col-span;
-    .col {
-      width: getWidth(4);
-    }
-  }
+	.col-three{
+		@extend %col-span;
+		.col{
+			width: getWidth(4);
+		}
+	}
 }
-
 @if $colFourSwitch {
-  .col-four {
-    @extend %col-span;
-    .col {
-      width: getWidth(3);
-    }
-  }
+	.col-four{
+		@extend %col-span;
+		.col{
+			width: getWidth(3);
+		}
+	}
 }

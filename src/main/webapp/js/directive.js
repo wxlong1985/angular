@@ -17,7 +17,7 @@ routerApp
             restrict: "AE",
             link: function (scope, element, attrs) {
                 element.bind('click', function (event) {
-                    mxGraphCells.editor(attrs.graphaction);
+                    flow.editor(attrs.graphaction);
                 });
             }
         }

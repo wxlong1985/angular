@@ -2,7 +2,7 @@
 var Style = {
 
     defaultVertexStyle: function (graph) {
-        var style = {};
+        var style = new Object();
         style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
         style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;   //必须定义label，不然会默认vertex中只有图片，这样图片会自动压缩
         style[mxConstants.STYLE_IMAGE_ALIGN] = "center";
@@ -20,7 +20,7 @@ var Style = {
         graph.getStylesheet().putDefaultVertexStyle(style);
     },
     defaultEdgeStyle: function (graph) {
-        var style = {};
+        var style = new Object();
         style[mxConstants.STYLE_ROUNDED] = true;       //设置连接线为曲线
         // style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_CONNECTOR;
         style[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_CLASSIC;    //定义箭头样式
@@ -90,7 +90,7 @@ var Style = {
 
     },
     occupiedCaseStyle: function (graph) {          //拆分节点生成虚框样式
-        var style = {};
+        var style = new Object();
         style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_SQUARE;
         style[mxConstants.STYLE_OPACITY] = '20';
         style[mxConstants.STYLE_FILLCOLOR] = 'none';
@@ -99,7 +99,7 @@ var Style = {
         graph.getStylesheet().putCellStyle("tflowblank", style)
     },
     dashedStyle: function () {
-        var style = {};
+        var style = new Object();
         style[mxConstants.STYLE_DASHED] = true;
         graph.getStylesheet().putCellStyle("dashed", style);
     }

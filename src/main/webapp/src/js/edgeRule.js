@@ -403,7 +403,8 @@ var edgeRule = [
             }
         ]
     }
-];
+]
+
 var IncomingLimitation = {
     "multi": [             //可多连的节点集合
         "tfiltermerge", "tfilterand", "tfiltergrouppriority", "tdiscountEC", "tdiscountUMP", "tdiscountdigitalpromocode", "tcommunicateSMS", "tcommunicateWAP", "tcommunicateMMS", "tcommunicateEDM", "tcommunicateOther", "tflowwait"
@@ -411,7 +412,7 @@ var IncomingLimitation = {
     "maximum": [          //此集合为有最大极限控制且大于一条的节点集合
         {"type": "tfilterexclude", "num": 2}
     ]
-};
+}
 var RuleValid = {
     valid: function (source, target) {
         var sourceGroup = this.findGroup(source);
@@ -456,4 +457,4 @@ var RuleValid = {
         }
         return {success: true, message: ''};
     }
-};
+}

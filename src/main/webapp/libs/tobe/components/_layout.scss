@@ -4,78 +4,71 @@
  * -------------------------------------------------
 */
 
-.page {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  width: 100%;
-  min-width: getWidth(12);
+.page{   
+	min-height:100%;
+	height:auto !important;
+	height:100%;
+	width:100%;
+	min-width:getWidth(12);
 }
-
-#header, #container, #main, #footer, #top_nav {
-  width: getWidth(12);
+#header,#container,#main,#footer,#top_nav{
+    width:getWidth(12);
 }
-
-#header, #container, #footer, #top_nav {
-  @extend %center-block;
+#header,#container,#footer,#top_nav{
+	@extend %center-block;
 }
-
-#container {
-  padding: 20px 0;
+#container{
+    padding:20px 0;  
 }
-
-#main, #aside_second, #aside_first {
-  @include float;
+#main,#aside_second,#aside_first{
+	@include float;
 }
-
-@if $gridPercentSwitch {
-  #container {
-    width: getWidth(12, false);
-  }
-  #main {
-    @include column(12);
-  }
+@if $gridPercentSwitch{
+	#container{
+		width:getWidth(12,false);
+	}
+	#main{
+		@include column(12);
+	}
 }
-
 //单边栏
 //----------------------------------------
 
 //左边栏
-#aside_first {
-  @include column(3);
-
-  @if not($gridPercentSwitch) {
-    @include alpha;
-  }
+#aside_first{
+	@include column(3);
+	
+	@if not($gridPercentSwitch){
+		@include alpha;
+	}
 }
-
-.layout-lm #main {
-  @include column(9);
-
-  @if not($gridPercentSwitch) {
-    @include omega;
-  }
+.layout-lm #main{
+	@include column(9);
+	
+	@if not($gridPercentSwitch){
+		@include omega;
+	}
 }
 
 //右边栏
-#aside_second {
-  @include column(3);
+#aside_second{
+	@include column(3);
 
-  @if not($gridPercentSwitch) {
-    @include omega;
-  }
+	@if not($gridPercentSwitch){
+		@include omega;
+	}
+}
+.layout-mr #main{
+	@include column(9);
+
+	@if not($gridPercentSwitch){
+		@include alpha;
+	}
 }
 
-.layout-mr #main {
-  @include column(9);
-
-  @if not($gridPercentSwitch) {
-    @include alpha;
-  }
-}
 
 //两边栏
 //----------------------------------------
-.layout-lmr #main {
-  @include column(6);
+.layout-lmr #main{
+	@include column(6);
 }

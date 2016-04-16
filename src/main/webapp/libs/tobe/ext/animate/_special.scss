@@ -3,13 +3,14 @@
 // special scss
 //-----------------------------------------------------
 
+
 // hinge
-@mixin animate-hinge() {
-  @include keyframes(hinge) {
+@mixin animate-hinge () {
+  @include keyframes(hinge){
     0% {
       @include rotate(0);
     }
-    20%, 60% {
+    20%,60% {
       @include rotate(80deg);
     }
     40% {
@@ -34,8 +35,8 @@
 }
 
 // rollIn
-@mixin animate-rollIn() {
-  @include keyframes(rollIn) {
+@mixin animate-rollIn () {
+  @include keyframes(rollIn){
     0% {
       opacity: 0;
       @include transform(translateX(-100%) rotate(-120deg));
@@ -52,8 +53,8 @@
 }
 
 // rollOut
-@mixin animate-rollOut() {
-  @include keyframes(rollOut) {
+@mixin animate-rollOut () {
+  @include keyframes(rollOut){
     0% {
       opacity: 1;
       @include transform(translateX(0) rotate(0));

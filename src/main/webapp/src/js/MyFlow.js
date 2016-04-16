@@ -19,7 +19,7 @@ var MyFlow = {
         for (var i = 0; i < len; i++) {
             for (var j = 0; j < configuration[i].nodes.length; j++) {
                 if (configuration[i].nodes[j].type == nodeName) {
-                    graph.openNode = configuration[i].nodes[j];
+                    graph.openNode = configuration[i].nodes[j]
                     break;
                 }
             }
@@ -38,7 +38,8 @@ var MyFlow = {
 
             graph.addCell(vertex);
             graph.setSelectionCell(vertex);
-        };
+        }
+
         // Creates the image which is used as the drag icon (preview)
         var img = toolbar.addMode(null, image, function (evt, cell) {
             var pt = this.graph.getPointForEvent(evt);
@@ -70,7 +71,7 @@ var MyFlow = {
             var parame = {
                 "nodes": [],
                 "connects": []
-            };
+            }
             for (var i = 0; i < len; i++) {
                 if (selectdCells[i].vertex) {
                     parame.nodes.push(selectdCells[i].id);
@@ -151,7 +152,7 @@ var MyFlow = {
             error: function (res) {
                 $(this).Alert({"title": res.message, "str": res.description, "mark": true});
             }
-        });
+        })
         dtd.resolve();
         return dtd.promise();
     },
@@ -185,9 +186,9 @@ var MyFlow = {
         var parame = {
             "nodes": nodes,
             "connects": connects
-        };
+        }
         var parames = JSON.stringify(parame);
-        console.info(parames);
+        console.info(parames)
         $.ajax({
             url: url,
             async: false,
@@ -240,14 +241,14 @@ var MyFlow = {
                     track.flag = false;
                 }
             }
-        };
+        }
         track.mouseDown = function (sender, me) {
             var cell = this.getCell(me);
             if (cell && cell.vertex) {
                 graph.isMoveCellStart = true;
             }
 
-        };
+        }
         track.mouseUp = function (sender, me) {
             graph.isMoveCellStart = false;
         }
@@ -257,7 +258,7 @@ var MyFlow = {
         graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {   //双击打开活动流程
             var cell = evt.getProperty('cell');
             var scope = angular.element(document.querySelector('#workflow')).scope();
-            scope.getOpenNodeCell(scope, cell);
+            scope.getOpenNodeCell(scope, cell)
             graph.stopEditing(cell);      //撤销双击编辑节点名称
             if (cell && cell.flowValidationNotPass) {     //该节点为验证未通过节点
                 cell.flowValidationNotPass = false;
@@ -416,7 +417,7 @@ var MyFlow = {
             this.mouseTrack();
             //复制节点
             mxGraphModel.prototype.cloneCells = function (cells, includeChildren) {
-                var mapping = {};
+                var mapping = new Object();
                 var clones = [];
                 var nodes = [];
                 var connects = [];
@@ -438,7 +439,8 @@ var MyFlow = {
                     graph.campCloneCells = cells;
                 }
                 return clones;
-            };
+            }
+
             this.connectValidation();
             graph.enabled = true;
 
@@ -453,7 +455,7 @@ var MyFlow = {
             var parame = {
                 "source": sourceId,
                 "target": targetId
-            };
+            }
             var parames = JSON.stringify(parame);
             var targetCell = graph.getModel().getCell(targetId);
             var sourceCell = graph.getModel().getCell(sourceId);
@@ -534,7 +536,7 @@ var MyFlow = {
                     flow.addVertex(null, parame.name, parame.x, parame.y, 62, 62, s);
                 }
             }
-        };
+        }
         if (sidebar && sidebar != null) {
             var botton = sidebar.addMode(label, null, funct, null, null, null);
             var tool_icon_htmlModel;
@@ -551,7 +553,7 @@ var MyFlow = {
 
                 var lastCell = null;
                 for (var i = 0; i < childCount; i++) {
-                    var curCell = parent.getChildAt(i);
+                    var curCell = parent.getChildAt(i)
                     if (curCell.vertex) {
                         lastCell = curCell;
                     }
@@ -565,7 +567,7 @@ var MyFlow = {
                         "style": type,
                         "x": lastCell.geometry.x,
                         "y": lastCell.geometry.y
-                    };
+                    }
                     funct(graph, null, null, null, null, o);
 
                 } else {
@@ -598,7 +600,7 @@ var MyFlow = {
                         //selectCell=null;
                     }
                 }
-            };
+            }
             function screening(id, ids) {
                 var flag = false;
                 for (var i = 0; i < ids.length; i++) {
@@ -639,7 +641,8 @@ var MyFlow = {
             vertex.create(graph, classify, nodeTitle, nodeName, src);
         }
     }
-};
+}
+
 function workflow($http, $scope, $compile, $locale) {
     $scope.nodeSrc = "";
     $scope.getOpenNodeCell = function (scope, cell) {
@@ -662,14 +665,14 @@ function workflow($http, $scope, $compile, $locale) {
         for (var i = 0; i < len; i++) {
             for (var j = 0; j < configuration[i].nodes.length; j++) {
                 if (configuration[i].nodes[j].type == nodeName) {
-                    graph.openNode = configuration[i].nodes[j];
+                    graph.openNode = configuration[i].nodes[j]
                     break;
                 }
             }
         }
 
 
-    };
+    }
     $scope.openNodePop = function () {
         if (graph.openNode != null) {
             graph.isEditable = true;
@@ -690,19 +693,19 @@ function workflow($http, $scope, $compile, $locale) {
                     "right": 0,
                     "background": "#CCC",
                     "opacity": 0.5
-                });
+                })
                 $("#nodeContent").append($div);
             }
 
         }
-    };
+    }
     //修改节点名称
     $scope.editNodeName = function (cellId, cellName) {
         var cell = graph.getModel().getCell(cellId);
         cell.value = cellName;
         graph.refresh();
 
-    };
+    }
     //清楚活动状态定时器
     $scope.clearStatusTimer = function () {
         if (typeof(jobRefreshTimer) != "undefined") {
@@ -711,7 +714,7 @@ function workflow($http, $scope, $compile, $locale) {
         if (typeof(campRefreshTimer) != "undefined") {
             clearTimeout(campRefreshTimer);
         }
-    };
+    }
     //特殊节点配置成功后生成虚框节点（如拆分）
     $scope.refreshGraph = function () {
         /*
@@ -724,7 +727,7 @@ function workflow($http, $scope, $compile, $locale) {
         graph.model.clear();
         flow.openFlow();
 
-    };
+    }
     /*编辑区*/
     $scope.screen = {
         "init": function () {

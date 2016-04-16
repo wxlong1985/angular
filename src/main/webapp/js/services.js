@@ -44,7 +44,7 @@ routerApp
             transformation: function () {
 
             }
-        };
+        }
         return bdMap;
     })
     .service('graph', function ($http) {

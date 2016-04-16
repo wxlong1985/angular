@@ -104,7 +104,7 @@
                 <line x="20" y="15"/>
             </path>
             <fillstroke/>
-            <linejoin join="round"/>
+            <linejoin join="round" />
             <strokewidth width="1"/>
             <strokecolor color="#000000"/>
             <strokecolor color="#000000"/>
@@ -140,7 +140,7 @@
                 <close/>
             </path>
             <fillstroke/>
-            <linejoin join="round"/>
+            <linejoin join="round" />
             <strokewidth width="1"/>
             <strokecolor color="#000000"/>
             <strokecolor color="#000000"/>

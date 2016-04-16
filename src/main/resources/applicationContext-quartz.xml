@@ -4,118 +4,118 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <!--  &lt;!&ndash; 短信发送 &ndash;&gt;
-      <bean id="appendOrderTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-          <property name="targetObject">
-              <ref bean="sendingMsgService" />
-          </property>
-          <property name="targetMethod">
-              <value>findSendingMsg</value>
-          </property>
-          <property name="concurrent">
-              <value>false</value>
-          </property>
-      </bean>
-      <bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-          <property name="jobDetail" ref="appendOrderTaskJob"></property>
-          <property name="cronExpression" value="0/10 * * * * ?"></property>
-      </bean>
+  <!--  &lt;!&ndash; 短信发送 &ndash;&gt;
+	<bean id="appendOrderTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="sendingMsgService" />
+		</property>
+		<property name="targetMethod">
+			<value>findSendingMsg</value>
+		</property>
+		<property name="concurrent">
+			<value>false</value>
+		</property>
+	</bean>
+	<bean id="cronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="appendOrderTaskJob"></property>
+        <property name="cronExpression" value="0/10 * * * * ?"></property>
+    </bean>
 
-      &lt;!&ndash; 下单定时器&ndash;&gt;
-      <bean id="orderApiTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-          <property name="targetObject">
-              <ref bean="orderDispatchQuzrtz"/>
-          </property>
-          <property name="targetMethod">
-              <value>doDispatchOrder</value>
-          </property>
-          <property name="concurrent">
-              <value>false</value>
-          </property>
-      </bean>
-      <bean id="orderApicronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-          <property name="jobDetail" ref="orderApiTaskJob"></property>
-          <property name="cronExpression" value="0/7 * * * * ?"></property>
-      </bean>
-      &lt;!&ndash; 火车票支付定时器&ndash;&gt;
-      <bean id="trainTicketPayJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-          <property name="targetObject">
-              <ref bean="trainTicketPayQuzrtz"/>
-          </property>
-          <property name="targetMethod">
-              <value>doPayTrainTicket</value>
-          </property>
-          <property name="concurrent">
-              <value>false</value>
-          </property>
-      </bean>
-      <bean id="trainTicketPayTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-          <property name="jobDetail" ref="trainTicketPayJob"></property>
-          <property name="cronExpression" value="0/7 * * * * ?"></property>
-      </bean>
+    &lt;!&ndash; 下单定时器&ndash;&gt;
+    <bean id="orderApiTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="orderDispatchQuzrtz"/>
+        </property>
+        <property name="targetMethod">
+            <value>doDispatchOrder</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="orderApicronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="orderApiTaskJob"></property>
+        <property name="cronExpression" value="0/7 * * * * ?"></property>
+    </bean>
+    &lt;!&ndash; 火车票支付定时器&ndash;&gt;
+    <bean id="trainTicketPayJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="trainTicketPayQuzrtz"/>
+        </property>
+        <property name="targetMethod">
+            <value>doPayTrainTicket</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="trainTicketPayTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="trainTicketPayJob"></property>
+        <property name="cronExpression" value="0/7 * * * * ?"></property>
+    </bean>
 
-      &lt;!&ndash; 携程数据同步 &ndash;&gt;
-      <bean id="ctripTicketTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-          <property name="targetObject">
-              <ref bean="nctripTicketQuartz" />
-          </property>
-          <property name="targetMethod">
-              <value>syncTicket</value>
-          </property>
-          <property name="concurrent">
-              <value>false</value>
-          </property>
-      </bean>
-      <bean id="ctripTicketCron" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-          <property name="jobDetail" ref="ctripTicketTaskJob"></property>
-          <property name="cronExpression" value="0 10 0 ? * SAT"></property>&lt;!&ndash; 每周六零点10分 &ndash;&gt;
-      </bean>
+    &lt;!&ndash; 携程数据同步 &ndash;&gt;
+    <bean id="ctripTicketTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="nctripTicketQuartz" />
+        </property>
+        <property name="targetMethod">
+            <value>syncTicket</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="ctripTicketCron" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="ctripTicketTaskJob"></property>
+        <property name="cronExpression" value="0 10 0 ? * SAT"></property>&lt;!&ndash; 每周六零点10分 &ndash;&gt;
+    </bean>
 
-      &lt;!&ndash; 携程价格日历数据同步 &ndash;&gt;
-      <bean id="ctripTicketDatePriceTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-          <property name="targetObject">
-              <ref bean="nctripTicketQuartz" />
-          </property>
-          <property name="targetMethod">
-              <value>syncTicketDatePrice</value>
-          </property>
-          <property name="concurrent">
-              <value>false</value>
-          </property>
-      </bean>
-      <bean id="ctripTicketDatePriceCron" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-          <property name="jobDetail" ref="ctripTicketDatePriceTaskJob"></property>
-          <property name="cronExpression" value="0 10 0 ? * SUN-FRI"></property>&lt;!&ndash; 除每周六零点10分 &ndash;&gt;
-      </bean>
+    &lt;!&ndash; 携程价格日历数据同步 &ndash;&gt;
+    <bean id="ctripTicketDatePriceTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="nctripTicketQuartz" />
+        </property>
+        <property name="targetMethod">
+            <value>syncTicketDatePrice</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="ctripTicketDatePriceCron" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="ctripTicketDatePriceTaskJob"></property>
+        <property name="cronExpression" value="0 10 0 ? * SUN-FRI"></property>&lt;!&ndash; 除每周六零点10分 &ndash;&gt;
+    </bean>
 
-      &lt;!&ndash; 携程退单后状态更新 &ndash;&gt;
-      <bean id="ctripCancelTicketTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-          <property name="targetObject">
-              <ref bean="nctripTicketQuartz" />
-          </property>
-          <property name="targetMethod">
-              <value>syncOrderStatus</value>
-          </property>
-          <property name="concurrent">
-              <value>false</value>
-          </property>
-      </bean>
-      <bean id="ctripCancelTicketCron" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-          <property name="jobDetail" ref="ctripCancelTicketTaskJob"></property>
-          <property name="cronExpression" value="0 10 3 * * ?"></property>&lt;!&ndash; 每天三点10分 &ndash;&gt;
-      </bean>
+    &lt;!&ndash; 携程退单后状态更新 &ndash;&gt;
+    <bean id="ctripCancelTicketTaskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="nctripTicketQuartz" />
+        </property>
+        <property name="targetMethod">
+            <value>syncOrderStatus</value>
+        </property>
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="ctripCancelTicketCron" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="ctripCancelTicketTaskJob"></property>
+        <property name="cronExpression" value="0 10 3 * * ?"></property>&lt;!&ndash; 每天三点10分 &ndash;&gt;
+    </bean>
 
-      <bean id="trigger" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-          <property name="triggers">
-              <list>
-                  <ref bean="cronTriggerBean"/>
-                  <ref bean="ctripTicketCron"/>
-                  <ref bean="ctripTicketDatePriceCron"/>
-                  <ref bean="ctripCancelTicketCron"/>
-                  <ref bean="orderApicronTriggerBean"/>
-                  <ref bean="trainTicketPayTriggerBean"/>
-              </list>
-          </property>
-      </bean>
-  -->
+    <bean id="trigger" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTriggerBean"/>
+                <ref bean="ctripTicketCron"/>
+                <ref bean="ctripTicketDatePriceCron"/>
+                <ref bean="ctripCancelTicketCron"/>
+                <ref bean="orderApicronTriggerBean"/>
+                <ref bean="trainTicketPayTriggerBean"/>
+            </list>
+        </property>
+    </bean>
+-->
 </beans>

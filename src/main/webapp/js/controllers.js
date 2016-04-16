@@ -7,7 +7,7 @@ HomeModule.controller('HomeCtrl', function ($scope, $http) {
     var req = {
         method: 'GET',
         url: GetUrl.homeinfo
-    };
+    }
     $http(req).success(function (data) {
         $scope.homeinfos = data.data;
     }).error(function (data) {
@@ -20,7 +20,7 @@ HomeModule.controller('HomeCtrl', function ($scope, $http) {
         }).error(function (data) {
             alert(data.msg)
         });
-    };
+    }
     $scope.loadItineraryInfo = function () {
         $http.get(GetUrl.homeItineraryinfo).success(function (data) {
             for (var i in data.data)
@@ -38,7 +38,7 @@ ServePointListModule.controller('ServePointListCtrl', function ($scope, $http, b
     var req = {
         method: 'GET',
         url: GetUrl.pointlist
-    };
+    }
     $http(req).success(function (data) {
         $scope.pointlist = data.data;
     }).error(function (data) {
@@ -59,7 +59,7 @@ GraphModule.controller('GraphCtrl', function ($scope, $http) {
     var req = {
         method: 'GET',
         url: GetUrl.graph.toolbar
-    };
+    }
     $http(req).success(function (data) {
         $scope.toolbars = data;
         $scope.title = '来自angular标题';

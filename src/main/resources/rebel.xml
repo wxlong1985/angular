@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com"
-             xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
 
-    <classpath>
-        <dir name="E:/IdeaProjects/hmly/data/data/projects/fengxiao/target/classes">
-        </dir>
-        <dir name="E:/IdeaProjects/hmly/data/data/projects/datamgr/target/classes">
-        </dir>
-        <dir name="E:/IdeaProjects/hmly/data/data/logic/common/target/classes">
-        </dir>
-        <dir name="E:/IdeaProjects/hmly/data/data/solr/target/classes">
-        </dir>
-    </classpath>
+	<classpath>
+		<dir name="E:/IdeaProjects/hmly/data/data/projects/fengxiao/target/classes">
+		</dir>
+		<dir name="E:/IdeaProjects/hmly/data/data/projects/datamgr/target/classes">
+		</dir>
+		<dir name="E:/IdeaProjects/hmly/data/data/logic/common/target/classes">
+		</dir>
+		<dir name="E:/IdeaProjects/hmly/data/data/solr/target/classes">
+		</dir>
+	</classpath>
 
-    <web>
-        <link target="/">
-            <dir name="E:/IdeaProjects/hmly/data/data/projects/fengxiao/src/main/webapp">
-            </dir>
-        </link>
-    </web>
+	<web>
+		<link target="/">
+			<dir name="E:/IdeaProjects/hmly/data/data/projects/fengxiao/src/main/webapp">
+			</dir>
+		</link>
+	</web>
 
 </application>

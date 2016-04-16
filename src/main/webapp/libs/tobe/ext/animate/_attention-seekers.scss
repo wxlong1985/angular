@@ -3,9 +3,10 @@
 // attention seekers scss
 //-----------------------------------------------------
 
+
 //bounce
-@mixin animate-bounce() {
-  @include keyframes(bounce) {
+@mixin animate-bounce () {
+  @include keyframes(bounce){
     0%, 20%, 50%, 80%, 100% {
       @include translateY(0);
     }
@@ -16,7 +17,7 @@
 
     60% {
       @include translateY(-15px);
-    }
+    }  
   }
   .bounce {
     @include animation-name(bounce);
@@ -25,15 +26,15 @@
 }
 
 // flash
-@mixin animate-flash() {
-  @include keyframes(flash) {
+@mixin animate-flash () {
+  @include keyframes(flash){
     0%, 50%, 100% {
       opacity: 1;
     }
 
     25%, 75% {
       opacity: 0;
-    }
+    }  
   }
   .flash {
     @include animation-name(flash);
@@ -42,8 +43,8 @@
 }
 
 // pulse
-@mixin animate-pulse() {
-  @include keyframes(pulse) {
+@mixin animate-pulse () {
+  @include keyframes(pulse){
     0% {
       @include scale(1);
     }
@@ -61,15 +62,15 @@
 }
 
 // shake
-@mixin animate-shake() {
-  @include keyframes(shake) {
-    0%, 100% {
+@mixin animate-shake () {
+  @include keyframes(shake){
+    0%,100%{
       @include translateX(0);
     }
-    10%, 30%, 50%, 70%, 90% {
+    10%,30%,50%,70%,90%{
       @include translateX(-10px);
     }
-    20%, 40%, 60%, 80% {
+    20%,40%,60%,80%{
       @include translateX(10px);
     }
   }
@@ -80,12 +81,12 @@
 }
 
 // swing
-@mixin animate-swing() {
-  @include keyframes(swing) {
+@mixin animate-swing () {
+  @include keyframes(swing){
     20% {
       @include rotate(15deg);
     }
-    40% {
+    40%{
       @include rotate(-10deg);
     }
     60% {
@@ -106,21 +107,21 @@
 }
 
 // tada
-@mixin animate-tada() {
-  @include keyframes(tada) {
+@mixin animate-tada () {
+  @include keyframes(tada){
     0% {
       @include scale(1);
     }
-    10%, 20% {
+    10%,20% {
       @include transform(scale(.9) rotate(-3deg));
     }
-    30%, 50%, 70%, 90% {
+    30%,50%,70%,90%{
       @include transform(scale(1.1) rotate(3deg));
     }
-    40%, 60%, 80% {
+    40%,60%,80%{
       @include transform(scale(1.1) rotate(-3deg));
     }
-    100% {
+    100%{
       @include transform(scale(1) rotate(0));
     }
   }
@@ -131,8 +132,8 @@
 }
 
 // wobble
-@mixin animate-wobble() {
-  @include keyframes(wobble) {
+@mixin animate-wobble () {
+  @include keyframes(wobble){
     0% {
       @include translateX(0%);
     }

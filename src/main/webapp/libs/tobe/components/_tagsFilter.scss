@@ -3,29 +3,31 @@
 // tagsFilter scss
 //-----------------------------------------------------
 
+
 // 变量
 //----------------------------------
-$tagsLabelWidth: 50px !default; //label宽度
-$tagsSelector: span !default; //如果不支持ie6，使用span标签，如果支持ie6，使用a标签
+$tagsLabelWidth:        50px !default;//label宽度
+$tagsSelector:          span !default;//如果不支持ie6，使用span标签，如果支持ie6，使用a标签
+
 
 // 样式
 //----------------------------------
-.tags-filter-item {
+.tags-filter-item{
   @extend %clearfix;
   padding-top: 5px;
-  @if $lte7 {
+  @if $lte7{
     padding-bottom: 5px;
   }
 
-  .tags-label {
+  .tags-label{
     @include float;
     width: $tagsLabelWidth;
   }
-  .tags-content {
+  .tags-content{
     overflow: hidden;
-    @extend %zoom;
+      @extend %zoom;
 
-    #{$tagsSelector} {
+    #{$tagsSelector}{
       @include float;
       margin-right: 10px;
       padding: 0 2px;
@@ -33,9 +35,9 @@ $tagsSelector: span !default; //如果不支持ie6，使用span标签，如果�
       white-space: nowrap;
       margin-bottom: 5px;
 
-      &.active, &:hover {
+      &.active,&:hover{
         background-color: $primary;
-        color: #fff;
+        color:#fff;
       }
     }
   }

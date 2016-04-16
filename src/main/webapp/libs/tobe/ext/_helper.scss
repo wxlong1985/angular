@@ -4,66 +4,60 @@
 //-----------------------------------------------------
 
 // ul/ol has list style
-ul.has-style {
+ul.has-style{
   @extend %ul-has-style;
 }
-
 // li float
-ul.inline-float {
+ul.inline-float{
   @extend %clearfix;
-  li {
+  li{
     @include float;
   }
 }
-
 // li inline-block
-ul.inline-block {
-  li {
-    @extend %inline-block;
+ul.inline-block{
+  li{
+    @extend %inline-block; 
     margin-right: 8px;
-    &:last-child {
+    &:last-child{
       margin-right: 0;
     }
   }
 }
 
 // 浮动及闭合浮动
-.fl {
+.fl{
   @extend %float;
 }
-
-.fr {
+.fr{
   @include float(right);
 }
-
-.clearfix {
+.clearfix{
   @extend %clearfix;
 }
 
 // 不同形式的隐藏
-.hidden {
+.hidden{
   @extend %hidden;
 }
-
 .visually-hidden {
   @extend %visually-hidden;
 }
 
 // text-align:left/right/center
-.tar {
-  text-align: right;
+.tar{
+	text-align: right;
 }
-
-.tac {
-  text-align: center;
+.tac{
+	text-align: center;
 }
 
 // 图片替换文字
-.ir {
-  @extend %ir;
+.ir{
+	@extend %ir;
 }
 
 // 灰色
-.gray {
-  color: $gray;
+.gray{
+  color:$gray;
 }

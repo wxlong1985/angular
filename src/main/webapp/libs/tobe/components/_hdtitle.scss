@@ -3,24 +3,26 @@
 // hdtitle scss
 //-----------------------------------------------------
 
+
 // 变量
 //---------------------------------
-$hdtitleLineHeight: 36px !default; //默认的行高为内容栏的行高
-$hdtitleLineHeightAside: 30px !default; //左右边栏的行高
+$hdtitleLineHeight:             36px !default;//默认的行高为内容栏的行高
+$hdtitleLineHeightAside:        30px !default;//左右边栏的行高
+
 
 // placeholder selector
 //---------------------------------
-%hdtitle {
+%hdtitle{
   @extend %clearfix;
   text-align: right;
   line-height: $hdtitleLineHeight;
 
-  h2, h3 {
+  h2,h3{
     @include float;
     line-height: $hdtitleLineHeight;
     margin-left: 10px;
   }
-  .more {
+  .more{
     font-family: $fontCn;
     margin-right: 10px;
     font-size: 12px;
@@ -30,15 +32,15 @@ $hdtitleLineHeightAside: 30px !default; //左右边栏的行高
 // 基础样式
 //---------------------------------
 .hd-title,
-.block-hd {
+.block-hd{
   @extend %hdtitle;
-  background-color: darken($grayLight, 4%);
+  background-color: darken($grayLight,4%);
 }
 
 // aside-block 边栏区块
-.aside-block .block-hd {
+.aside-block .block-hd{
   &,
-  & h3 {
+  & h3{
     line-height: $hdtitleLineHeightAside;
   }
 }

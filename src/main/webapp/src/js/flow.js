@@ -28,7 +28,7 @@ var flow = {
         var parent = graph.getDefaultParent();
         model.beginUpdate();
         try {
-            var v1 = graph.insertVertex(parent, id, label, x, y, w, h, s);
+            var v1 = graph.insertVertex(parent, id, label, x, y, w, h, s)
             v1.setConnectable(true);
 
             /*有备注鼠标浮动备注*/
@@ -52,11 +52,11 @@ var flow = {
     //特殊节点--拆分节点虚拟框
     addSpecialVertex: function (id, label, x, y, w, h, s) {
         var model = new mxGraphModel();
-        Style.occupiedCaseStyle(graph);
+        Style.occupiedCaseStyle(graph)
         var parent = graph.getDefaultParent();
         model.beginUpdate();
         try {
-            var v1 = graph.insertVertex(parent, id, label, x, y, w, h, s);
+            var v1 = graph.insertVertex(parent, id, label, x, y, w, h, s)
             v1.setConnectable(false);
             graph.orderCells("back", [v1]);
         }
@@ -109,7 +109,7 @@ var flow = {
             var parame = {
                 "nodes": [],
                 "connects": []
-            };
+            }
             for (var i = 0; i < len; i++) {
                 if (selectdCells[i].vertex) {
                     parame.nodes.push(selectdCells[i].id);
@@ -145,4 +145,4 @@ var flow = {
     redo: function () {
 
     }
-};
+}

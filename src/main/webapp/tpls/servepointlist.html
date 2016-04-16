@@ -1,21 +1,20 @@
 <div id="servepointlist" ng-controller="ServePointListCtrl">
-    <div class="container">
-        <div class="jumbotron pointlist-header">
-            <div class="title-box"><span>关于我们</span></div>
-        </div>
-        <div class="pointlist-box">
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="data in pointlist">
-                    <div class="row">
-                        <span class="col-xs-8">{{data.name}}</span>
-                        <div class="icons col-xs-4">
-                            <a href="http://api.map.baidu.com/marker?location={{data.coordinate}}&title={{data.name}}&content={{data.address}}&output=html"><i
-                                    class="iconfont icon-dingweiyuandian"></i></a>
-                            <a href="tel://13489991340"><i class="iconfont icon-dianhua"></i></a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
+	<div class="container">
+		<div class="jumbotron pointlist-header">
+			<div class="title-box"><span>关于我们</span></div>
+		</div>
+		<div class="pointlist-box">
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="data in pointlist">
+					<div class="row">
+						<span class="col-xs-8">{{data.name}}</span>
+						<div class="icons col-xs-4">
+							<a href="http://api.map.baidu.com/marker?location={{data.coordinate}}&title={{data.name}}&content={{data.address}}&output=html"><i class="iconfont icon-dingweiyuandian"></i></a>
+							<a href="tel://13489991340"><i class="iconfont icon-dianhua"></i></a>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
 </div>

@@ -5,57 +5,57 @@
 
 // 变量
 //---------------------------------
-$imgtextHImgSize: 250px 160px !default; //默认图片大小
-$imgtextHGutter: 10px !default; //图片与文字的间距
-$imgtextHBlockImgSize: 50px 50px !default; //区块图文混排默认图片大小
-$imgtextHBlockGutter: 5px !default; //区块图文混排默认间距
+$imgtextHImgSize:           250px 160px !default;//默认图片大小
+$imgtextHGutter:            10px !default;//图片与文字的间距
+$imgtextHBlockImgSize:      50px 50px !default;//区块图文混排默认图片大小
+$imgtextHBlockGutter:       5px !default;//区块图文混排默认间距
 
 // 变量mixin
 //---------------------------------
-@mixin imgtext-h-variables($img:$imgtextHImgSize,$gutter:$imgtextHGutter) {
-  .img-left {
+@mixin imgtext-h-variables($img:$imgtextHImgSize,$gutter:$imgtextHGutter){
+  .img-left{
     margin-right: $gutter;
-    @if $lte7 {
-      _margin-right: $gutter - 3px; //ie6 3px bug
+    @if $lte7{
+      _margin-right: $gutter - 3px;//ie6 3px bug
     }
-    img {
-      width: nth($img, 1);
-      height: nth($img, 2);
+    img{
+      width:nth($img,1);
+      height:nth($img,2);
     }
   }
 }
 
 // 左右混排基本样式
 //---------------------------------
-%imgtext-base {
-  .img-left {
+%imgtext-base{
+  .img-left{
     @include float;
   }
 
-  .text-right {
+  .text-right{
     overflow: hidden;
     @extend %zoom;
-    h3 {
+    h3{
       line-height: 1.3;
       font-weight: bold;
     }
-  }
+  }  
 }
 
 // .img-left，.text-right
 .imgtext-h,
 .imgtext-h-list,
-.imgtext-h-block {
+.imgtext-h-block{ 
   @extend %imgtext-base;
 }
 
 // 适用于单个图文左右混排
 //---------------------------------
-.imgtext-h {
+.imgtext-h{
   @extend %clearfix;
   @include imgtext-h-variables;
-  .text-right {
-    h3 {
+  .text-right{
+    h3{
       margin-bottom: 10px;
     }
   }
@@ -63,15 +63,15 @@ $imgtextHBlockGutter: 5px !default; //区块图文混排默认间距
 
 // 适用于列表，罗列图文左右混排数据
 //---------------------------------
-.imgtext-h-list {
+.imgtext-h-list{
   @include imgtext-h-variables;
-  li {
-    @extend %horizontal-line;
-    @include min-height(nth($imgtextHImgSize, 2));
+  li{
+      @extend %horizontal-line;
+      @include min-height(nth($imgtextHImgSize,2));
   }
-  .text-right {
-    h3 {
-      font-size: $baseFontSize + 2px;
+  .text-right{
+    h3{
+      font-size:$baseFontSize + 2px;
       margin-bottom: 10px;
     }
   }
@@ -79,15 +79,15 @@ $imgtextHBlockGutter: 5px !default; //区块图文混排默认间距
 
 // 区块类列表
 //---------------------------------
-.imgtext-h-block {
+.imgtext-h-block{
   font-size: 12px;
-  li {
-    @include min-height(nth($imgtextHBlockImgSize, 2));
+  li{
+    @include min-height(nth($imgtextHBlockImgSize,2));
     padding: 5px 0;
   }
-  @include imgtext-h-variables($imgtextHBlockImgSize, $imgtextHBlockGutter);
-  .text-right {
-    h3 {
+  @include imgtext-h-variables($imgtextHBlockImgSize,$imgtextHBlockGutter);
+  .text-right{
+    h3{
       font-size: 12px;
       font-weight: normal;
       @extend %ellipsis-basic;

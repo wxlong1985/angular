@@ -7,7 +7,7 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
         if (this.splitType == str) {
             return "cur";
         }
-    };
+    }
     $scope.splitSmt = function () {
         if (!$scope.splitName) {
             return false;
@@ -49,10 +49,9 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
                         element.css({"borderColor": color});
                     });
 
-                    angular.forEach($scope.randomSplit.partPercentage, function (data, i) {
-                        s;
+                    angular.forEach($scope.randomSplit.partPercentage, function (data, i) {s
                         $scope.$watch('randomSplit.partPercentage[' + i + '].percentage', function (newVal, oldVal) {
-                            var str = element.attr('name');
+                            var str = element.attr('name')
                             var num = str.charAt(str.length - 1) - 1;
                             if (newVal <= 100 && num == i) {
                                 element.css({"borderColor": '#d9d9d9', "borderWidth": 1});
@@ -66,9 +65,9 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
             }
         });
         $("#splitForm").submit();
-    };
+    }
     $scope.splitSave = function () {
-        var obj = {};
+        var obj = {}
         obj.name = $scope.splitName;
         obj.remark = $scope.nodecomment;
         obj.type = $scope.splitType;
@@ -77,6 +76,7 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
             if ($("#randomTotal").hasClass("error")) {
                 return false;
             }
+            ;
             //判断重名
             if ($scope.randomSplit.clearAryObj(obj.partPercentage)) {
                 $scope.splitGroupNameMatchFalg = true;
@@ -84,6 +84,7 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
             } else {
                 $scope.splitGroupNameMatchFalg = false;
             }
+            ;
         }
         var element = angular.element(".splitSmtButton");
         var callback = function () {
@@ -93,11 +94,12 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
             angular.element(".yunat_maskLayer:last").remove();
             //刷新画布
             $scope.refreshGraph();
-        };
+        }
+
         disposeCommMethod.shuyunAjaxButtonClickMethod(function () {
             splitNodeDate.post(graph.nodeId, obj, callback, element);
         }, element);
-    };
+    }
     //打开节点获取数据
     $scope.getSplitData = function (nodeId) {
         var callback = function (data) {
@@ -115,13 +117,13 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
                         "percentage": 100
                     }];
             }
-        };
+        }
         splitNodeDate.get(nodeId, callback);
 
         getListService.getNodeTipsByType(function (responseTips) { // 获取tips
             $scope.splitRemark = responseTips.tips || "";
         }, "tfiltersplit");
-    };
+    }
     $scope.getSplitData(graph.nodeId);
     disposeCommMethod.initShuyunAjaxButtonGlobaValueTrue();
 
@@ -186,6 +188,7 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
             for (var i = 0; i < aryObj.length; i++) {
                 splitNameAryStore.push(aryObj[i].name);
             }
+            ;
             var matchStoreName = splitNameAryStore.sort();
             for (var i = 0; i < splitNameAryStore.length; i++) {
                 if (matchStoreName[i] == matchStoreName[i + 1]) {
@@ -195,7 +198,8 @@ function splitNodeCtrl($scope, $window, $location, $http, splitNodeDate, getList
             }
             return matchAryFlag;
         }
-    };
+    }
+
     $scope.openNodePop();    //显示节点弹出框
 
 }

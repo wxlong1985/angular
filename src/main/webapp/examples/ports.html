@@ -126,7 +126,8 @@
                 // Disables drilling into non-swimlanes.
                 graph.isValidRoot = function (cell) {
                     return this.isValidDropTarget(cell);
-                };
+                }
+
                 // Does not allow selection of locked cells
                 graph.isCellSelectable = function (cell) {
                     return !this.isCellLocked(cell);
@@ -152,7 +153,8 @@
                     }
 
                     return tmp;
-                };
+                }
+
                 // Disables HTML labels for swimlanes to avoid conflict
                 // for the event processing on the child cells. HTML
                 // labels consume events before underlying cells get the
@@ -165,7 +167,8 @@
                 // See also: configureStylesheet.
                 graph.isHtmlLabel = function (cell) {
                     return !this.isSwimlane(cell);
-                };
+                }
+
                 // To disable the folding icon, use the following code:
                 /*graph.isCellFoldable = function(cell)
                  {
@@ -205,7 +208,7 @@
 //                style[mxConstants.STYLE_FONTCOLOR] = '#000000';
 //                style[mxConstants.STYLE_FONTSTYLE] = mxConstants.FONT_BOLD;
 
-                var style = {};
+                var style = new Object();
                 style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
                 style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;   //必须定义label，不然会默认vertex中只有图片，这样图片会自动压缩
                 style[mxConstants.STYLE_IMAGE_ALIGN] = "center";
@@ -213,7 +216,7 @@
                 style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
                 style[mxConstants.STYLE_ALIGN] = "center";
                 style[mxConstants.STYLE_VERTICAL_ALIGN] = "top";
-                style[mxConstants.STYLE_VERTICAL_LABEL_POSITION] = "bottom";
+                style[mxConstants.STYLE_VERTICAL_LABEL_POSITION]="bottom";
                 style[mxConstants.STYLE_GRADIENTCOLOR] = 'none';
                 style[mxConstants.STYLE_FONTCOLOR] = '#000000';
                 style[mxConstants.STYLE_OPACITY] = '100';
@@ -268,7 +271,7 @@
 
                 for (i = 0; i < barJson.length; i++) {
                     var item = barJson[i];
-                    addSidebarIcon(graph, sidebar, item.name, item.img);
+                    addSidebarIcon(graph, sidebar,item.name,item.img);
                 }
 
 
@@ -394,6 +397,8 @@
                 }
             }
         }
+        ;
+
         function addToolbarButton(editor, toolbar, action, label, image, isTransparent) {
             var button = document.createElement('button');
             button.style.fontSize = '10';
@@ -417,6 +422,8 @@
             mxUtils.write(button, label);
             toolbar.appendChild(button);
         }
+        ;
+
         function showModalWindow(graph, title, content, width, height) {
             var background = document.createElement('div');
             background.style.position = 'absolute';
@@ -449,6 +456,8 @@
             graph.tooltipHandler.hide();
             wnd.setVisible(true);
         }
+        ;
+
         function addSidebarIcon(graph, sidebar, label, image) {
             // Function that is executed when the image is dropped on
             // the graph. The cell argument points to the cell under
@@ -465,7 +474,7 @@
                     // rather than the label markup, so use 'image=' + image for the style.
                     // as follows: v1 = graph.insertVertex(parent, null, label,
                     // pt.x, pt.y, 120, 120, 'image=' + image);
-                    v1 = graph.insertVertex(parent, null, label, x, y, 50, 50, 'image=' + image);
+                    v1 = graph.insertVertex(parent, null, label, x, y, 50, 50,'image=' + image);
                     v1.setConnectable(true);
                 }
                 finally {
@@ -473,7 +482,8 @@
                 }
 
                 graph.setSelectionCell(v1);
-            };
+            }
+
             // Creates the image which is used as the sidebar icon (drag source)
             var img = document.createElement('img');
             img.setAttribute('src', image);
@@ -491,8 +501,10 @@
             var ds = mxUtils.makeDraggable(img, graph, funct, dragElt, 0, 0, true, true);
             ds.setGuidesEnabled(true);
         }
+        ;
+
         function configureStylesheet(graph) {
-            var style = {};
+            var style = new Object();
             style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
             style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
             style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
@@ -507,32 +519,32 @@
             style[mxConstants.STYLE_FONTSTYLE] = 0;
             style[mxConstants.STYLE_IMAGE_WIDTH] = '48';
             style[mxConstants.STYLE_IMAGE_HEIGHT] = '48';
-            graph.getStylesheet().putDefaultVertexStyle(style);
+			graph.getStylesheet().putDefaultVertexStyle(style);
 
             // NOTE: Alternative vertex style for non-HTML labels should be as
             // follows. This repaces the above style for HTML labels.
-            var style = {};
-            style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
-            style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-            style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
-            style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-            style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
-            style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
-            style[mxConstants.STYLE_SPACING_TOP] = '56';
-            style[mxConstants.STYLE_GRADIENTCOLOR] = '#7d85df';
-            style[mxConstants.STYLE_STROKECOLOR] = '#5d65df';
-            style[mxConstants.STYLE_FILLCOLOR] = '#adc5ff';
-            style[mxConstants.STYLE_FONTCOLOR] = '#1d258f';
-            style[mxConstants.STYLE_FONTFAMILY] = 'Verdana';
-            style[mxConstants.STYLE_FONTSIZE] = '12';
-            style[mxConstants.STYLE_FONTSTYLE] = '1';
-            style[mxConstants.STYLE_ROUNDED] = '1';
-            style[mxConstants.STYLE_IMAGE_WIDTH] = '48';
-            style[mxConstants.STYLE_IMAGE_HEIGHT] = '48';
-            style[mxConstants.STYLE_OPACITY] = '80';
-            graph.getStylesheet().putDefaultVertexStyle(style);
+            var style = new Object();
+             style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
+             style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
+             style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
+             style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
+             style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
+             style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
+             style[mxConstants.STYLE_SPACING_TOP] = '56';
+             style[mxConstants.STYLE_GRADIENTCOLOR] = '#7d85df';
+             style[mxConstants.STYLE_STROKECOLOR] = '#5d65df';
+             style[mxConstants.STYLE_FILLCOLOR] = '#adc5ff';
+             style[mxConstants.STYLE_FONTCOLOR] = '#1d258f';
+             style[mxConstants.STYLE_FONTFAMILY] = 'Verdana';
+             style[mxConstants.STYLE_FONTSIZE] = '12';
+             style[mxConstants.STYLE_FONTSTYLE] = '1';
+             style[mxConstants.STYLE_ROUNDED] = '1';
+             style[mxConstants.STYLE_IMAGE_WIDTH] = '48';
+             style[mxConstants.STYLE_IMAGE_HEIGHT] = '48';
+             style[mxConstants.STYLE_OPACITY] = '80';
+             graph.getStylesheet().putDefaultVertexStyle(style);
 
-            style = {};
+            style = new Object();
             style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_SWIMLANE;
             style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
             style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
@@ -555,7 +567,7 @@
 //            style[mxConstants.STYLE_STROKECOLOR] = '#868686';
 //            style[mxConstants.STYLE_PERIMETER_SPACING] = 1;   //连线与节点间的距
 
-            style = {};
+            style = new Object();
             style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
             style[mxConstants.STYLE_FONTCOLOR] = '#774400';
             style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
@@ -574,7 +586,7 @@
             style[mxConstants.STYLE_ROUNDED] = true;
             style[mxConstants.STYLE_EDGE] = mxEdgeStyle.EntityRelation;
         }
-
+        ;
     </script>
 </head>
 
