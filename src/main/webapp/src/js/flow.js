@@ -1,4 +1,5 @@
 var flow = {
+    //工具栏事件
     editor: function (action) {
         if (action == "delete") {
             operatePalette.del();
@@ -21,6 +22,7 @@ var flow = {
             editor.execute(action);
         }
     },
+    //添加元素
     addVertex: function (id, label, x, y, w, h, s, selection, remark) {// remark-是否有备注
         graph.htmlLabels = true; // 设置可解析html
         var model = new mxGraphModel();
@@ -64,6 +66,7 @@ var flow = {
             model.endUpdate();
         }
     },
+    //添加边
     addEdge: function (sourceId, position, targetId, name) {
         var model = new mxGraphModel();
         var parent = graph.getDefaultParent();
@@ -90,7 +93,7 @@ var flow = {
         }
         console.info("targetCellStyle:" + targetCellStyle + " sourceCellStyle" + sourceCellStyle);
         var valid = RuleValid.valid(sourceCellStyle, targetCellStyle);
-        if (valid.success) {
+        if (true) {
             model.beginUpdate();
             try {
                 graph.insertEdge(parent, connectId, name, sourceCell, targetCell, s);
@@ -101,7 +104,9 @@ var flow = {
         } else {
             alert(valid.message);
         }
-    }, del: function () {
+    },
+    //删除元素
+    del: function () {
         var selectdCells = null;
         if (!graph.isSelectionEmpty()) {
             selectdCells = graph.getSelectionCells();
@@ -127,6 +132,7 @@ var flow = {
         }
 
     },
+    //移动元素
     move: function (parame) {
         var parames = JSON.stringify(parame);
         var len = parame.length;
@@ -139,9 +145,11 @@ var flow = {
             graph.setSelectionCell(cell)
         }
     },
+    //自定义取消事件，由于绑定的元素弹窗，此处建议替换掉上一步、下一步事件
     undo: function () {
 
     },
+    //自定义取消事件，由于绑定的元素弹窗，此处建议替换掉上一步、下一步事件
     redo: function () {
 
     }

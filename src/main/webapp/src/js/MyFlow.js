@@ -1,5 +1,6 @@
 var MyFlow = {
-    getOpenNodeCell: function (scope, cell) {
+    localStoreSave : false,
+    getOpenNodeCell: function (cell) {
         var style = cell.style;
         var value = cell.value;
         var nodeName = style.split(";");
@@ -10,20 +11,7 @@ var MyFlow = {
         if (cell.parent.vertex) {  //排除vertex中的子元素
             return false;
         }
-
-        $scope.nodeSrc = root + "app/marketing/view/node/" + nodeName + ".html?_=" + new Date().getTime();
-        $scope.$apply();
-        graph.nodeId = cell.id;
-        var len = configuration.length;  //变量configuration为前端配置文件，主要存储节点的信息
-        graph.openNode = null;
-        for (var i = 0; i < len; i++) {
-            for (var j = 0; j < configuration[i].nodes.length; j++) {
-                if (configuration[i].nodes[j].type == nodeName) {
-                    graph.openNode = configuration[i].nodes[j]
-                    break;
-                }
-            }
-        }
+        console.info(cell);
     },
     addToolbarItem: function (graph, toolbar, prototype, image) {
         // Function that is executed when the image is dropped on
@@ -257,8 +245,7 @@ var MyFlow = {
     doubleClick: function () {
         graph.addListener(mxEvent.DOUBLE_CLICK, function (sender, evt) {   //双击打开活动流程
             var cell = evt.getProperty('cell');
-            var scope = angular.element(document.querySelector('#workflow')).scope();
-            scope.getOpenNodeCell(scope, cell)
+            MyFlow.getOpenNodeCell(cell)
             graph.stopEditing(cell);      //撤销双击编辑节点名称
             if (cell && cell.flowValidationNotPass) {     //该节点为验证未通过节点
                 cell.flowValidationNotPass = false;
@@ -337,6 +324,12 @@ var MyFlow = {
             }
 
         })
+    },
+    interValLocalSave: function () {
+
+        setTimeout(function(){
+
+        },2000);
     },
     //初始化画布
     init: function () {
@@ -443,8 +436,8 @@ var MyFlow = {
 
             this.connectValidation();
             graph.enabled = true;
-
         }
+        this.interValLocalSave();
     },
     connectValidation: function () {
         mxConnectionHandler.prototype.connect = function (source, target, evt, dropTarget) {
