@@ -182,7 +182,10 @@ var MyFlow = {
             async: false,
             type: "POST",
             cache: false,
-            data: parames,
+            data: {
+                'flow.nodes' : nodes,
+                'flow.connects' : connects
+            },
             dataType: "json",
             contentType: 'application/json',
             success: function (res) {

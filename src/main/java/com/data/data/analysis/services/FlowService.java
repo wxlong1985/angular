@@ -2,6 +2,7 @@ package com.data.data.analysis.services;
 
 import com.data.data.analysis.services.dao.FlowDao;
 import com.data.data.analysis.services.entity.Flow;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,5 +30,9 @@ public class FlowService {
             return findFlow;
         }
         return null;
+    }
+
+    public void saveFlow(JSONObject o) {
+
     }
 }
