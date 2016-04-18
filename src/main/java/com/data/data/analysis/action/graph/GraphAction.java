@@ -10,7 +10,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.annotation.Resource;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by Kingsley on 2016/3/26.
@@ -22,6 +24,7 @@ public class GraphAction extends JxmallAction {
     private static final Log log = LogFactory.getLog(GraphAction.class);
     @Resource
     private FlowService flowService;
+
     public Result save() throws IOException {
         String post = getPostResult();
         log.info(post);
@@ -30,6 +33,16 @@ public class GraphAction extends JxmallAction {
         flowService.saveFlow(o);
         return jsonResult(result);
     }
+
+    private String getPostResult() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(getRequest().getInputStream(), "UTF-8"));
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+        while ((line = br.readLine()) != null)
+            sb.append(line);
+        return sb.toString();
+    }
+
 
     public Flow getFlow() {
         return flow;

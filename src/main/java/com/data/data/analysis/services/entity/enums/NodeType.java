@@ -1,5 +1,8 @@
 package com.data.data.analysis.services.entity.enums;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Created by Kingsley on 2016/3/26.
  */
@@ -20,7 +23,7 @@ public enum NodeType {
     tdatammsmart("智能会员等级"), tdatammvip("会员等级"), tdatacustomgroup("客户分组操作"),
     tdataattributeedit("属性修改"), tanalysisorder("订单分析"), tanalysiseffmarket("营销效果分析"),
     tanalysisFeature("客户特征分析");
-
+    private static final Log log = LogFactory.getLog(NodeType.class);
     private String name;
 
     NodeType(String name) {
@@ -33,5 +36,15 @@ public enum NodeType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public static NodeType findNodeType(String type) {
+        for (NodeType nodeType : values()) {
+            if (nodeType.name().equals(type)) {
+                return nodeType;
+            }
+        }
+        log.error(String.format("Type %s Not Found", type));
+        return null;
     }
 }

@@ -2,7 +2,15 @@ package com.data.data.analysis.services.entity;
 
 import com.data.data.analysis.services.entity.enums.FlowStatus;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +24,7 @@ public class Flow extends com.framework.hibernate.util.Entity {
     @Id
     @GeneratedValue
     private Long id;
-    private String flowNam;
+    private String flowName;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     private Long userid;
@@ -37,12 +45,12 @@ public class Flow extends com.framework.hibernate.util.Entity {
         this.id = id;
     }
 
-    public String getFlowNam() {
-        return flowNam;
+    public String getFlowName() {
+        return flowName;
     }
 
-    public void setFlowNam(String flowNam) {
-        this.flowNam = flowNam;
+    public void setFlowName(String flowNam) {
+        this.flowName = flowNam;
     }
 
     public Date getCreateTime() {

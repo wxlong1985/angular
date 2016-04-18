@@ -113,7 +113,7 @@ var MyFlow = {
         $.ajax({
             url: GetUrl.graph.saveGraph,
             //async: false,
-            type: "GET",
+            type: "POST",
             cache: false,
             dataType: "json",
             success: function (res) {
@@ -173,7 +173,7 @@ var MyFlow = {
         var html = mxUtils.getPrettyXml(node);
         var parame = {
             "nodes": nodes,
-            "connects": connects
+            "edges": connects
         }
         var parames = JSON.stringify(parame);
         console.info(parames)
@@ -182,10 +182,7 @@ var MyFlow = {
             async: false,
             type: "POST",
             cache: false,
-            data: {
-                'flow.nodes' : nodes,
-                'flow.connects' : connects
-            },
+            data: parames,
             dataType: "json",
             contentType: 'application/json',
             success: function (res) {
@@ -300,27 +297,9 @@ var MyFlow = {
                         sourceCellId = sourceCell.id,
                         targetCell = graph.intoTheBox,    //拆分虚拟框
                         targetCellId = targetCell.id;
-                    $.ajax({
-                        url: rootStatic + "workflow/" + graph.workflowId + "/node/" + moveCellId + "/replace/" + targetCellId,
-                        async: false,
-                        type: "PUT",
-                        cache: false,
-                        dataType: "json",
-                        contentType: 'application/json',
-                        success: function (res) {
-                            //刷新画布
-                            var scope = angular.element(document.querySelector('#workflow')).scope();
-                            scope.refreshGraph();
-                        },
-                        error: function (XMLHttpRequest) {
-                            var responseText = XMLHttpRequest.responseText;
-                            var res = eval('(' + responseText + ')');
-                            $(this).Alert({"title": "删除失败", "str": res.description, "mark": true});
-                            var scope = angular.element(document.querySelector('#workflow')).scope();
-                            scope.refreshGraph();
-                            return false;
-                        }
-                    })
+                    //刷新画布
+                    var scope = angular.element(document.querySelector('#workflow')).scope();
+                    scope.refreshGraph();
                 } else {
                     flow.move(nodes)
                 }
@@ -637,130 +616,4 @@ var MyFlow = {
             vertex.create(graph, classify, nodeTitle, nodeName, src);
         }
     }
-}
-
-function workflow($http, $scope, $compile, $locale) {
-    $scope.nodeSrc = "";
-    $scope.getOpenNodeCell = function (scope, cell) {
-        var style = cell.style;
-        var value = cell.value;
-        var nodeName = style.split(";");
-        nodeName = nodeName[0];
-        if (!cell || !cell.vertex || nodeName == "tflowstart") {  //判断为vertex成立
-            return false;
-        }
-        if (cell.parent.vertex) {  //排除vertex中的子元素
-            return false;
-        }
-
-        $scope.nodeSrc = root + "app/marketing/view/node/" + nodeName + ".html?_=" + new Date().getTime();
-        $scope.$apply();
-        graph.nodeId = cell.id;
-        var len = configuration.length;  //变量configuration为前端配置文件，主要存储节点的信息
-        graph.openNode = null;
-        for (var i = 0; i < len; i++) {
-            for (var j = 0; j < configuration[i].nodes.length; j++) {
-                if (configuration[i].nodes[j].type == nodeName) {
-                    graph.openNode = configuration[i].nodes[j]
-                    break;
-                }
-            }
-        }
-
-
-    }
-    $scope.openNodePop = function () {
-        if (graph.openNode != null) {
-            graph.isEditable = true;
-            $("#nodeContent").addInteractivePop({
-                magTitle: graph.openNode.name + "节点",
-                mark: true,
-                drag: true,
-                position: "fixed",
-                width: graph.openNode.popWidth,
-                height: graph.openNode.popHeight
-            });
-            if (false) {
-                $div = $("<div>").css({
-                    "position": "absolute",
-                    "top": 38,
-                    "left": 0,
-                    "bottom": 0,
-                    "right": 0,
-                    "background": "#CCC",
-                    "opacity": 0.5
-                })
-                $("#nodeContent").append($div);
-            }
-
-        }
-    }
-    //修改节点名称
-    $scope.editNodeName = function (cellId, cellName) {
-        var cell = graph.getModel().getCell(cellId);
-        cell.value = cellName;
-        graph.refresh();
-
-    }
-    //清楚活动状态定时器
-    $scope.clearStatusTimer = function () {
-        if (typeof(jobRefreshTimer) != "undefined") {
-            clearTimeout(jobRefreshTimer);
-        }
-        if (typeof(campRefreshTimer) != "undefined") {
-            clearTimeout(campRefreshTimer);
-        }
-    }
-    //特殊节点配置成功后生成虚框节点（如拆分）
-    $scope.refreshGraph = function () {
-        /*
-         *清楚页面中执行状态
-         *清楚画布中的节点
-         *重新加载画布节点
-         *重新启动执行活动的方法
-         */
-        //this.clearStatusTimer();
-        graph.model.clear();
-        flow.openFlow();
-
-    }
-    /*编辑区*/
-    $scope.screen = {
-        "init": function () {
-            var $screen = angular.element("#screen");
-            if ($screen.hasClass("fullScree")) {
-                $screen.addClass("shrinkScreen").removeClass("fullScree");
-                $screen.attr("title", "退出全屏");
-                $scope.screen.fullScreen();
-            } else if ($screen.hasClass("shrinkScreen")) {
-                $screen.addClass("fullScree").removeClass("shrinkScreen");
-                $screen.attr("title", "全屏编辑");
-                $scope.screen.shrinkScreen();
-            }
-        },
-
-        "fullScreen": function () {
-            angular.element("#operating_area").css({"position": "fixed", "top": "0"});
-            angular.element(".action_buttons").css({"position": "fixed"});
-            angular.element(".header").css({"z-index": 0});
-            //html5 触发浏览器全屏
-            var el = document.documentElement;
-            var rfs = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
-            rfs.call(el);
-        },
-        "shrinkScreen": function () {
-            angular.element("#operating_area").css({"position": "absolute", "top": "36"});
-            angular.element(".action_buttons").css({"position": "absolute"});
-            angular.element(".header").css({"z-index": 900});
-            //html5 退出浏览器全屏
-            if (document.cancelFullScreen) {
-                document.cancelFullScreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitCancelFullScreen) {
-                document.webkitCancelFullScreen();
-            }
-        }
-    }
-
-}
+};
