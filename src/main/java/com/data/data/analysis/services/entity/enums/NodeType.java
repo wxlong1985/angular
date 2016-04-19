@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Created by Kingsley on 2016/3/26.
+ * 各种节点
  */
 public enum NodeType {
 

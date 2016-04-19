@@ -5,5 +5,16 @@ package com.data.data.analysis.services.entity.enums;
  */
 public enum FlowStatus {
 
-    RUN, NEW, EXCEPTION;
+    /**
+     * 运行中
+     */
+    RUN
+    /**
+     *新创建
+     */
+    , NEW,
+    /**
+     * 异常
+     */
+    EXCEPTION;
 }

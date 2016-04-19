@@ -24,6 +24,9 @@ public class Flow extends com.framework.hibernate.util.Entity {
     @Id
     @GeneratedValue
     private Long id;
+    /**
+     * 流程名称
+     */
     private String flowName;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
