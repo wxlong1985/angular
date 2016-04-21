@@ -1,5 +1,8 @@
 var MyFlow = {
-    localStoreSave : false,
+    localStoreSave: false,
+    currentFlow: 'currentFlow',
+    scope : '',
+    workflowid : '-1',
     getOpenNodeCell: function (cell) {
         var style = cell.style;
         var value = cell.value;
@@ -13,44 +16,44 @@ var MyFlow = {
         }
         console.info(cell);
     },
-    addToolbarItem: function (graph, toolbar, prototype, image) {
-        // Function that is executed when the image is dropped on
-        // the graph. The cell argument points to the cell under
-        // the mousepointer if there is one.
-        var funct = function (graph, evt, cell, x, y) {
-            graph.stopEditing(false);
-
-            var vertex = graph.getModel().cloneCell(prototype);
-            vertex.geometry.x = x;
-            vertex.geometry.y = y;
-
-            graph.addCell(vertex);
-            graph.setSelectionCell(vertex);
-        }
-
-        // Creates the image which is used as the drag icon (preview)
-        var img = toolbar.addMode(null, image, function (evt, cell) {
-            var pt = this.graph.getPointForEvent(evt);
-            funct(graph, evt, cell, pt.x, pt.y);
-        });
-
-        // Disables dragging if element is disabled. This is a workaround
-        // for wrong event order in IE. Following is a dummy listener that
-        // is invoked as the last listener in IE.
-        mxEvent.addListener(img, 'mousedown', function (evt) {
-            // do nothing
-        });
-
-        // This listener is always called first before any other listener
-        // in all browsers.
-        mxEvent.addListener(img, 'mousedown', function (evt) {
-            if (img.enabled == false) {
-                mxEvent.consume(evt);
-            }
-        });
-        mxUtils.makeDraggable(img, graph, funct);
-        return img;
-    },
+    //addToolbarItem: function (graph, toolbar, prototype, image) {
+    //    // Function that is executed when the image is dropped on
+    //    // the graph. The cell argument points to the cell under
+    //    // the mousepointer if there is one.
+    //    var funct = function (graph, evt, cell, x, y) {
+    //        graph.stopEditing(false);
+    //
+    //        var vertex = graph.getModel().cloneCell(prototype);
+    //        vertex.geometry.x = x;
+    //        vertex.geometry.y = y;
+    //
+    //        graph.addCell(vertex);
+    //        graph.setSelectionCell(vertex);
+    //    }
+    //
+    //    // Creates the image which is used as the drag icon (preview)
+    //    var img = toolbar.addMode(null, image, function (evt, cell) {
+    //        var pt = this.graph.getPointForEvent(evt);
+    //        funct(graph, evt, cell, pt.x, pt.y);
+    //    });
+    //
+    //    // Disables dragging if element is disabled. This is a workaround
+    //    // for wrong event order in IE. Following is a dummy listener that
+    //    // is invoked as the last listener in IE.
+    //    mxEvent.addListener(img, 'mousedown', function (evt) {
+    //        // do nothing
+    //    });
+    //
+    //    // This listener is always called first before any other listener
+    //    // in all browsers.
+    //    mxEvent.addListener(img, 'mousedown', function (evt) {
+    //        if (img.enabled == false) {
+    //            mxEvent.consume(evt);
+    //        }
+    //    });
+    //    mxUtils.makeDraggable(img, graph, funct);
+    //    return img;
+    //},
     del: function () {
         var selectdCells = null;
         if (!graph.isSelectionEmpty()) {
@@ -95,19 +98,19 @@ var MyFlow = {
     redo: function () {
 
     },
-    addVertex: function (icon, w, h, style) {
-        var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
-        vertex.setVertex(true);
-
-        var img = this.addToolbarItem(graph, toolbar, vertex, icon);
-        img.enabled = true;
-
-        graph.getSelectionModel().addListener(mxEvent.CHANGE, function () {
-            var tmp = graph.isSelectionEmpty();
-            mxUtils.setOpacity(img, (tmp) ? 100 : 20);
-            img.enabled = tmp;
-        });
-    },
+    //addVertex: function (icon, w, h, style) {
+    //    var vertex = new mxCell(null, new mxGeometry(0, 0, w, h), style);
+    //    vertex.setVertex(true);
+    //
+    //    var img = this.addToolbarItem(graph, toolbar, vertex, icon);
+    //    img.enabled = true;
+    //
+    //    graph.getSelectionModel().addListener(mxEvent.CHANGE, function () {
+    //        var tmp = graph.isSelectionEmpty();
+    //        mxUtils.setOpacity(img, (tmp) ? 100 : 20);
+    //        img.enabled = tmp;
+    //    });
+    //},
     openFlow: function (id) {
         var dtd = $.Deferred();
         $.ajax({
@@ -117,25 +120,7 @@ var MyFlow = {
             cache: false,
             dataType: "json",
             success: function (res) {
-                var data = res;
-                var nodes = data.nodes;//获取所有节点信息并在画布上循环出来
-                for (var i = 0; i < nodes.length; i++) {
-                    var s = nodes[i].type + ';image=mxGraph/images/flowIcon/' + nodes[i].type + '.png;';
-                    if (nodes[i].type == "tflowblank") {
-                        flow.addSpecialVertex(nodes[i].id, nodes[i].remark, nodes[i].x, nodes[i].y, 62, 62, "tflowblank;");
-                    } else {
-                        this.addVertex(nodes[i].id, nodes[i].name, nodes[i].x, nodes[i].y, 64, 64, s, true, nodes[i].remark);
-                    }
-
-                }
-                var connects = data.connects;
-                for (var i = 0; i < connects.length; i++) {
-                    var sourceId = connects[i].source;
-                    var targetId = connects[i].target;
-                    var position = connects[i].position;
-                    var name = connects[i].name;
-                    flow.addEdge(sourceId, position, targetId, name);
-                }
+                MyFlow.openFlowFromObj(res);
             },
             error: function (res) {
                 $(this).Alert({"title": res.message, "str": res.description, "mark": true});
@@ -144,7 +129,27 @@ var MyFlow = {
         dtd.resolve();
         return dtd.promise();
     },
-    save: function (url) {
+    openFlowFromObj: function (data) {
+        var nodes = data.nodes;
+        for (var i = 0; i < nodes.length; i++) {
+            var s = nodes[i].type + ';image=/images/graph/' + nodes[i].type + '.png;';
+            if (nodes[i].type == "tflowblank") {
+                flow.addSpecialVertex(nodes[i].id, nodes[i].remark, nodes[i].x, nodes[i].y, 62, 62, "tflowblank;");
+            } else {
+                flow.addVertex(nodes[i].id, nodes[i].name, nodes[i].x, nodes[i].y, 64, 64, s, true, nodes[i].remark);
+            }
+
+        }
+        var edges = data.edges;
+        for (var i = 0; i < edges.length; i++) {
+            var sourceId = edges[i].source;
+            var targetId = edges[i].target;
+            var position = edges[i].position;
+            var name = edges[i].name;
+            flow.addEdge(sourceId, position, targetId, name);
+        }
+    },
+    params: function () {
         var parent = graph.getDefaultParent();
         var childCount = graph.model.getChildCount(parent);
         var nodes = [];
@@ -153,7 +158,7 @@ var MyFlow = {
             var cell = graph.model.getChildAt(parent, i);
             var o = {};
             if (cell.vertex) {
-                o.workflowId = graph.workflowId;
+                o.workflowId = MyFlow.workflowid;
                 o.id = cell.id;
                 o.name = cell.value;
                 o.type = cell.style.split(";")[0];
@@ -162,7 +167,7 @@ var MyFlow = {
                 nodes.push(o);
             }
             if (cell.edge) {
-                o.workflowId = graph.workflowId;
+                o.workflowId = MyFlow.workflowid;
                 o.source = cell.source.id;
                 o.target = cell.target.id;
                 connects.push(o);
@@ -173,10 +178,16 @@ var MyFlow = {
         var html = mxUtils.getPrettyXml(node);
         var parame = {
             "nodes": nodes,
-            "edges": connects
+            "edges": connects,
+            title : MyFlow.scope.title,
+            id : MyFlow.workflowid
         }
-        var parames = JSON.stringify(parame);
+        return JSON.stringify(parame);
+    },
+    save: function (url) {
+        var parames = this.params();
         console.info(parames)
+        //window.localStorage.removeItem(MyFlow.currentFlow);
         $.ajax({
             url: url,
             async: false,
@@ -187,9 +198,11 @@ var MyFlow = {
             contentType: 'application/json',
             success: function (res) {
                 if (res.success) {
-                    graph.workflowId = res.workflowId;
+                    MyFlow.workflowid = res.workflowid;
+                    window.localStorage.setItem(MyFlow.currentFlow, MyFlow.params());
+                    bootbox.alert('保存成功');
                 } else {
-
+                    bootbox.alert(res.errorMsg);
                 }
             },
             error: function (res) {
@@ -308,15 +321,16 @@ var MyFlow = {
         })
     },
     interValLocalSave: function () {
-
-        setTimeout(function(){
-
-        },2000);
+        setTimeout(function () {
+            setInterval(function () {
+                window.localStorage.setItem(MyFlow.currentFlow, MyFlow.params());
+            }, 2000);
+        }, 5000);
     },
     //初始化画布
     init: function () {
         window.graph = null;
-        if (!mxClient.isBrowserSupported()) {
+        if (!mxClient.isBrowserSupported() && window.localStorage) {
             mxUtils.error('该浏览器版本太低，请升级', 200, false);
         } else {
             window.editor = new mxEditor();
@@ -368,7 +382,6 @@ var MyFlow = {
             };
             mxTooltipHandler.prototype.zIndex = 999;
             new mxRubberband(graph);                   //橡皮圈选中
-            graph.workflowId = '1';
             graph.campId = '1';
             graph.currentType = '1';
             graph.isRemark = true;    //是否为创建人
@@ -419,7 +432,15 @@ var MyFlow = {
             this.connectValidation();
             graph.enabled = true;
         }
-        this.interValLocalSave();
+        var obj = window.localStorage.getItem(MyFlow.currentFlow);
+        if (obj) {
+            obj = JSON.parse(obj);
+            if(obj.nodes && obj.nodes.length > 0){
+                MyFlow.openFlowFromObj(obj);
+            }
+        }
+        MyFlow.interValLocalSave();
+        MyFlow.scope = angular.element(document.querySelector('#GraphCtrl')).scope();
     },
     connectValidation: function () {
         mxConnectionHandler.prototype.connect = function (source, target, evt, dropTarget) {
@@ -505,11 +526,11 @@ var MyFlow = {
                 //var data = res;
                 //flow.addVertex(data.id, data.name, data.x, data.y, 62, 62, s);
                 //前端测试使用
-                if (parame.type == 'tfilterfind') {
-                    flow.addSpecialVertex(null, parame.name, parame.x, parame.y, 62, 62, "tflowblank;");
-                } else {
-                    flow.addVertex(null, parame.name, parame.x, parame.y, 62, 62, s);
-                }
+                //if (parame.type == 'tfilterfind') {
+                //    flow.addSpecialVertex(null, parame.name, parame.x, parame.y, 62, 62, "tflowblank;");
+                //} else {
+                //}
+                flow.addVertex(null, parame.name, parame.x, parame.y, 62, 62, s);
             }
         }
         if (sidebar && sidebar != null) {

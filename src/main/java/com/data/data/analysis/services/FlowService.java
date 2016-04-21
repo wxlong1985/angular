@@ -46,17 +46,28 @@ public class FlowService {
         return null;
     }
 
-    public void saveFlow(JSONObject o) {
+    public Flow saveFlow(JSONObject o) {
         JSONArray nodesJSON = o.getJSONArray("nodes");
         JSONArray edgesJSON = o.getJSONArray("edges");
+        long id = o.getLong("id");
+        String title = o.getString("title");
+        Flow flow = new Flow();
         List<Node> nodes = new ArrayList<Node>();
         List<Edge> edges = new ArrayList<Edge>();
-        Flow flow = new Flow();
+        if(id == -1){
+            flow.setStatus(FlowStatus.NEW);
+            flow.setCreateTime(new Date());
+        }else{
+            flow = flowDao.load(id);
+            edgeDao.deleteAll(flow.getEdges());
+            nodeDao.deleteAll(flow.getNodes());
+        }
+        flow.setFlowName(title);
         flow.setEdges(edges);
         flow.setNodes(nodes);
-        flow.setCreateTime(new Date());
-        flow.setStatus(FlowStatus.NEW);
+
         flowDao.save(flow);
+
         for (int i = 0; i < nodesJSON.size(); i++) {
             JSONObject nodeJson = nodesJSON.getJSONObject(i);
             Node node = (Node) JSONObject.toBean(nodeJson, Node.class);
@@ -73,5 +84,8 @@ public class FlowService {
             edges.add(edge);
         }
         edgeDao.save(edges);
+        return flow;
     }
+
+
 }

@@ -30,7 +30,9 @@ public class GraphAction extends JxmallAction {
         log.info(post);
         JSONObject o = JSONObject.fromObject(post);
         log.info(o);
-        flowService.saveFlow(o);
+        Flow flow = flowService.saveFlow(o);
+        result.put("success", true);
+        result.put("workflowid", flow.getId());
         return jsonResult(result);
     }
 
