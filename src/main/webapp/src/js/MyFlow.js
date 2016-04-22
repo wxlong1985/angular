@@ -130,6 +130,7 @@ var MyFlow = {
         return dtd.promise();
     },
     openFlowFromObj: function (data) {
+        MyFlow.workflowid = data.id;
         var nodes = data.nodes;
         for (var i = 0; i < nodes.length; i++) {
             var s = nodes[i].type + ';image=/images/graph/' + nodes[i].type + '.png;';
